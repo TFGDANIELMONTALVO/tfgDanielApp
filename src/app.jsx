@@ -4,10 +4,12 @@ import { CreateGroup } from "./pages/createGroup";
 import { GroupDetail } from "./pages/groupDetail";
 import { GroupListMenu } from "./pages/groupListMenu";
 import { Home } from "./pages/home";
+import { Join } from "./pages/join";
 import { Login } from "./pages/login";
 import { MyGroups } from "./pages/myGroups";
 import { Register } from "./pages/register";
 import { Settings } from "./pages/settings";
+import { Wallet } from "./pages/wallet";
 
 export function App(){
     return(
@@ -21,8 +23,10 @@ export function App(){
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/my-groups" element={<MyGroups/>}/>
                     <Route path="/group/:id" element={<GroupDetail/>}/>
+                    <Route path="/join/:id" element={<Join/>}/>
                     <Route path="/create-group" element={<CreateGroup/>}/>
                     <Route path="/settings" element={<Settings/>}/>
+                    <Route path="/wallet" element={<Wallet/>}/>
                 </Routes>
             </BrowserRouter>
         </div>

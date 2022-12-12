@@ -1,9 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useCallback } from "react";
 import { Button, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { userDetailRoute } from "../services/axios";
 
 export function NavbarComponent({text, linkText}) {
   const navigate = useNavigate();
+  const [user, setUser] = useState();
+  const id = localStorage.getItem("user")
+
+  const onFetchUser = useCallback(async() => {
+    const response = await userDetailRoute(id)
+    setUser(response.data)
+  })
 
   const onClickLogout = () => {
     localStorage.removeItem("user")
@@ -13,6 +22,10 @@ export function NavbarComponent({text, linkText}) {
   const onClickCreateGroup = () => {
     navigate("/create-group")
   }
+
+  useEffect(()=>{
+    onFetchUser()
+  })
 
   return (
     <>
@@ -46,9 +59,10 @@ export function NavbarComponent({text, linkText}) {
                 )
               }
               {
-                localStorage.getItem("user") && (
-                  <NavDropdown title="Usuario" id="basic-nav-dropdown">
+                localStorage.getItem("user") && user &&(
+                  <NavDropdown key={user.userName} title={user.userName}>
                     <NavDropdown.Item href="settings">Ajustes</NavDropdown.Item>
+                    <NavDropdown.Item href="wallet">Wallet</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item onClick={onClickLogout}>Cerrar sesión</NavDropdown.Item>
                   </NavDropdown>

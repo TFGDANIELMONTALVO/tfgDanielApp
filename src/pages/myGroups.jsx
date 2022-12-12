@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Card, CardGroup, Col, Container, Row } from "react-bootstrap";
 import { CardGroups } from "../components/card.group.component";
 import { NavbarComponent } from "../components/navbar.component";
+import { userDetailRoute } from "../services/axios";
 
 export function MyGroups(){
+    const [user, setGroups] = useState();
+    const id = localStorage.getItem("user");
+
+    const onFetchGroups = useCallback(async () => {
+        try {
+            const response = await userDetailRoute(id);
+            setGroups(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }, [])
+
+    //const onClickDeleteUser = 
+
+    useEffect(()=>{
+        onFetchGroups();
+    }, [])
+
+    console.log(user)
+
     return(
         <>
             <NavbarComponent/>
@@ -16,38 +37,55 @@ export function MyGroups(){
                 </Card.Body>
             </Card>
 
-            <Container>
-            <Row>
-                <Col className="mt-5 mb-5">
-                    <h4>Grupos en los que eres el Administrador:</h4>
-                </Col>
+            
+            <Row className="offset-1 mt-5">
+                <h4>Grupos en los que eres el Administrador:</h4>
             </Row>   
 
-            <Row>
-                <Col>
-                    <CardGroups/>
-                </Col>
-                <Col md="4">
-                    <Card>
-                        <Card.Text>
-                            <h3>Grupo</h3>
-                        </Card.Text>
-                    </Card>
-                </Col>
-                <Col className="text-center" md="4">
-                    <Card>
-                        <Card.Text>
-                            <h3>+</h3>
-                        </Card.Text>
-                    </Card>
-                </Col>
+            {
+                user && user.ownerGroups ? (
+                    user.ownerGroups.map((group, index) => (
+                        <Row className="mt-2 mb-5" key={[group.category, user.name, group.users.length, group.numOfUsers, group.price]}>
+                            <Col md="4">
+                                <CardGroups 
+                                    categoryGroup={group.category}
+                                    nameUser={user.name}
+                                    maxNumUser={group.numOfUsers}
+                                    usersInGroup={group.users.length}
+                                    priceGroup={group.price}
+                                    groupId={group._id}
+                                />
+                            </Col>
+                        </Row>
+                    ))
+                ) : (
+                    <span>Cargando cards...</span>
+                )
+            }  
+
+            <Row className="offset-1 mt-5">
+                <h4>Grupos en los que eres un Miembro:</h4>
             </Row>
-            <Row>
-                <Col className="mt-5">
-                    <h4>Grupos en los que eres un Miembro:</h4>
-                </Col>
-            </Row>
-            </Container>
+
+            {
+                user && user.suscribedGroups ? (
+                    user.suscribedGroups.map((group, index) => (
+                        <Row className="mt-2 mb-5" key={[group.category, group.users.length, group.ownerId.name, group.numOfUsers, group.price]}>
+                            <Col md="4">
+                            <CardGroups 
+                                categoryGroup={group.category}
+                                nameUser={group.ownerId.name}
+                                maxNumUser={group.numOfUsers}
+                                usersInGroup={group.users.length}
+                                priceGroup={group.price}
+                                groupId={group._id}/>
+                            </Col>
+                        </Row>
+                    ))
+                ) : (
+                    <span>Cargando cards...</span>
+                )
+            } 
         </>
     )
 }
