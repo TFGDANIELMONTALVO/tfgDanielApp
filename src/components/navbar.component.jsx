@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCallback } from "react";
 import { Button, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { userDetailRoute } from "../services/axios";
 import share from "../images/Share.png";
 
@@ -13,7 +13,7 @@ export function NavbarComponent({text, linkText}) {
   const onFetchUser = useCallback(async() => {
     const response = await userDetailRoute(id)
     setUser(response.data)
-  })
+  }, [user])
 
   const onClickLogout = () => {
     localStorage.removeItem("user")
@@ -25,8 +25,8 @@ export function NavbarComponent({text, linkText}) {
   }
 
   useEffect(()=>{
-    onFetchUser()
-  })
+    !user && onFetchUser()
+  }, [user])
 
   return (
     <>
@@ -44,22 +44,22 @@ export function NavbarComponent({text, linkText}) {
           <Navbar.Collapse className="justify-content-end">
             <Nav>
               {
-                localStorage.getItem("user") && (
+                user && (
                   <Button className="rounded-pill" variant="primary" onClick={onClickCreateGroup}><b >+</b> Crear un grupo</Button>
                 )
               }
               {
-                localStorage.getItem("user") && (
+                user && (
                   <Nav.Link href="/my-groups">Mis grupos y pagos</Nav.Link>
                 )
               }
               {
-                !localStorage.getItem("user") && (
+                !user && (
                   <Nav.Link href={linkText}>{text}</Nav.Link>
                 )
               }
               {
-                localStorage.getItem("user") && user &&(
+                user &&(
                   <NavDropdown key={user.userName} title={user.userName}>
                     <NavDropdown.Item href="settings">Ajustes</NavDropdown.Item>
                     <NavDropdown.Item href="wallet">Wallet</NavDropdown.Item>

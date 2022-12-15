@@ -42,11 +42,13 @@ export const userLogin = async (email, password) => {
 }
 
 export const deleteUserRoute = async (userId) => {
-    return axios.delete(`${baseUrl}/users/delete/${userId}`);
+    return axios.put(`${baseUrl}/users/delete/${userId}`);
 }
 
-export const deleteGroupRoute = async (groupId) => {
-    return axios.delete(`${baseUrl}/groups/delete/${groupId}`);
+export const deleteGroupRoute = async (groupId, ownerId) => {
+    return axios.put(`${baseUrl}/groups/delete/${groupId}`, {
+        ownerId
+    });
 }
 
 export const updateUserRoute = async (userId, userUpdated) => {

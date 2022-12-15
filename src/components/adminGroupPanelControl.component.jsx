@@ -29,16 +29,16 @@ export function AdminGroupPanelControl() {
     } catch (error) {
         console.log(error);    
     }
-  })
+  }, [])
 
   const onClickDeleteGroupAdmin = useCallback(async () => {
     try {
-      await deleteGroupRoute(id);
+      await deleteGroupRoute(id, group.ownerId);
       navigate("/my-groups");
     } catch (error) {
       console.log(error);
     }
-  });
+  }, [group, id]);
 
   useEffect(() => {
     onFetchGroup();

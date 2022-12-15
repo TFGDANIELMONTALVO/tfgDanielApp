@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Card, CardGroup, Col, Container, Row } from "react-bootstrap";
+import { Alert, Card, CardGroup, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { CardGroups } from "../components/card.group.component";
 import { NavbarComponent } from "../components/navbar.component";
 import { userDetailRoute } from "../services/axios";
+import _ from "lodash";
 
 export function MyGroups() {
   const navigate = useNavigate();
@@ -52,6 +53,7 @@ export function MyGroups() {
       </Row>
 
       <Row className="p-2">
+        {user && user.ownerGroups && (_.isEmpty(user.ownerGroups) ? <Alert variant="secondary">Aquí aparecerán los grupos que hayas creado</Alert> : null)}
         {user && user.ownerGroups ? (
           user.ownerGroups.map((group, index) => (
             <Col
@@ -85,6 +87,7 @@ export function MyGroups() {
       </Row>
 
       <Row className="p-2">
+        {user && user.suscribedGroups && (_.isEmpty(user.ownerGroups) ? <Alert variant="secondary">Aquí aparecerán los grupos a los que te hayas unido</Alert> : null)}
         {user && user.suscribedGroups ? (
           user.suscribedGroups.map((group, index) => (
             <Col

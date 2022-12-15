@@ -176,17 +176,17 @@ export function GroupDetail() {
               </p>
               <h3>Credenciales:</h3>
               <p>
-                <b>Email: {isUserInGroup() || isAdminGroup() ? group.serviceUser : "***************"}</b>
+                Email: {isUserInGroup() || isAdminGroup() ? <b>{group.serviceUser}</b>: <b>***************</b>}
               </p>
               <p>
-                <b>Contraseña: {isUserInGroup() || isAdminGroup() ? group.servicePassword : "***************"}</b>
+                Contraseña: {isUserInGroup() || isAdminGroup() ? <b>{group.servicePassword}</b> : <b>***************</b>}
               </p>
             </Col>
           </Row>
           <Row className="justify-content-center">
             <Col md="5">
               <p>
-                Estado: {isGroupComplete() ? <b>CERRADO</b> : <b>ACTIVO</b>}
+                Estado: {isGroupComplete() ? <b className="text-danger">CERRADO</b> : <b className="text-success">ACTIVO</b>}
               </p>
               <p>
                 Fecha de creación:{" "}
@@ -204,7 +204,7 @@ export function GroupDetail() {
                       <p>{isUserInGroup() ? "Pagando:" : "En grupo:"}</p>
                       <h3>{group.price}€</h3>
                     </Card.Text>
-                    {isGroupComplete() ? (
+                    {isGroupComplete() && !isUserInGroup() ? (
                       <Button disabled>Unirse al grupo</Button>
                     ) : (
                       <Button
