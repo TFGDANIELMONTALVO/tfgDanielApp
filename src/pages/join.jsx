@@ -48,6 +48,9 @@ export function Join(){
     }, [])
 
     useEffect(()=>{
+        if (!localStorage.getItem("user")) {
+            navigate("/login");
+          }
         onFetchGroup()
     }, [])
 

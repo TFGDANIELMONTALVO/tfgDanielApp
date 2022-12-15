@@ -2,12 +2,17 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { deleteGroupRoute, groupDetailRoute, updateGroupRoute } from "../services/axios";
+import { ModalWindow } from "./modal.window.component";
 
 export function AdminGroupPanelControl() {
+  const [show, setShow] = useState(false);
   const [group, setGroup] = useState();
   const [updatedGroup, setUpdatedGroup] = useState();
   const navigate = useNavigate();
   const { id } = useParams();
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const onFetchGroup = useCallback(async () => {
     try {
@@ -72,12 +77,13 @@ export function AdminGroupPanelControl() {
         )}
         <Row className="mt-4 mb-1">
           <Col>
-          <Button variant="danger" type="text" onClick={onClickDeleteGroupAdmin}>
-            Borrar Grupo
+          <Button variant="danger" type="text" onClick={handleShow}>
+            Borrar grupo
           </Button>
           </Col>
         </Row>
       </Card.Body>
+      <ModalWindow show={show} handleClose={handleClose} modalTitle={"Borrar grupo"} modalText={"¿Estas seguro de querer borrar el grupo? Esta acción no se puede deshacer"} modalConfirmation={"Borrar grupo"} onClickModalWindow={onClickDeleteGroupAdmin}/>
     </>
   );
 }

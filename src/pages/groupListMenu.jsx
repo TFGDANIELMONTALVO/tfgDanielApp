@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { useCallback, useEffect, useState } from "react";
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Button, Card, Col, Row, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { CardGroups } from "../components/card.group.component";
 import { NavbarComponent } from "../components/navbar.component";
@@ -28,7 +28,7 @@ export function GroupListMenu() {
       <NavbarComponent />
 
       <Card
-        className="text-center"
+        className="text-center rounded-0"
         style={{
           width: "100%",
           height: "5rem",
@@ -44,34 +44,35 @@ export function GroupListMenu() {
         </Card.Body>
       </Card>
 
-      <Row className="justify-content-center text-center mt-5">
-        <Col xs="3" md="1">
-          <Button onClick={() => setFilter(undefined)}>Todos</Button>
-        </Col>
-        <Col xs="3" md="1">
-          <Button onClick={() => setFilter("Disney+")}>Disney+</Button>
-        </Col>
-        <Col xs="3" md="1">
-          <Button onClick={() => setFilter("Netflix Premium")}>Netflix</Button>
-        </Col>
-        <Col xs="3" md="1">
-          <Button onClick={() => setFilter("HBOmax")}>HBOmax</Button>
-        </Col>
-      </Row>
+      <Col className="text-center m-4">
+        <Button className="m-2" onClick={() => setFilter(undefined)}>
+          Todos
+        </Button>
+        <Button className="m-2 border-0" style={{background: "rgb(2,0,36)", background: "linear-gradient(90deg, rgba(14,9,121,1) 0%, rgba(0,53,255,1) 100%)"}} onClick={() => setFilter("Disney+")}>
+          Disney+
+        </Button>
+        <Button className="m-2 border-0" style={{background: "rgb(2,0,36)", background: "linear-gradient(90deg, rgba(121,9,9,1) 0%, rgba(255,0,0,1) 100%)"}} onClick={() => setFilter("Netflix Premium")}>
+          Netflix
+        </Button>
+        <Button className="m-2 border-0" style={{background: "rgb(95,9,121)", background: "linear-gradient(90deg, rgba(95,9,121,1) 0%, rgba(123,0,255,1) 100%)"}} onClick={() => setFilter("HBOmax")}>
+          HBOmax
+        </Button>
+      </Col>
 
-      {groups && groups.list ? (
-        groups.list.map((group, index) => (
-          <Row
-            className="mt-5"
-            key={[
-              group.category,
-              group.users.length,
-              group.ownerId.name,
-              group.numOfUsers,
-              group.price,
-            ]}
-          >
-            <Col md="4">
+      <Row className="p-2">
+        {groups && groups.list ? (
+          groups.list.map((group, index) => (
+            <Col
+              md="4"
+              className="my-3"
+              key={[
+                group.category,
+                group.users.length,
+                group.ownerId.name,
+                group.numOfUsers,
+                group.price,
+              ]}
+            >
               <CardGroups
                 categoryGroup={group.category}
                 nameUser={group.ownerId.name}
@@ -81,11 +82,13 @@ export function GroupListMenu() {
                 groupId={group._id}
               />
             </Col>
+          ))
+        ) : (
+          <Row className="d-flex justify-content-center">
+            <Spinner animation="grow" variant="primary" />
           </Row>
-        ))
-      ) : (
-        <span>Loading...</span>
-      )}
+        )}
+      </Row>
     </>
   );
 }

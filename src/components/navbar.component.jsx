@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { Button, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { userDetailRoute } from "../services/axios";
+import share from "../images/Share.png";
 
 export function NavbarComponent({text, linkText}) {
   const navigate = useNavigate();
@@ -29,23 +30,22 @@ export function NavbarComponent({text, linkText}) {
 
   return (
     <>
-      <Navbar bg="dark" variant="dark">
+      <Navbar bg="light" variant="light">
         <Container>
           <Navbar.Brand href="/">
             <img
               alt=""
-              src="/logo512.png"
-              width="30"
+              src={share}
+              width="140"
               height="30"
               className="d-inline-block align-top"
-            />{" "}
-            ShareIT
+            />{" "} 
           </Navbar.Brand>
           <Navbar.Collapse className="justify-content-end">
             <Nav>
               {
                 localStorage.getItem("user") && (
-                  <Button variant="primary" onClick={onClickCreateGroup}>+ Crear un grupo</Button>
+                  <Button className="rounded-pill" variant="primary" onClick={onClickCreateGroup}><b >+</b> Crear un grupo</Button>
                 )
               }
               {

@@ -39,45 +39,39 @@ export function CardGroups({
     return maxNumUser - usersInGroup + "/" + maxNumUser + " sitios disponibles";
   }, []);
 
-  const isGroupComplete = useCallback (() => {
+  const isGroupComplete = useCallback(() => {
     return usersInGroup === maxNumUser;
-  }, [])
+  }, []);
 
   return (
     <>
       <Container>
-        <Card bg="light" className="offset-1">
-          <Row>
-            <Col xs="3" md="4" className="offset-1 mt-4">
-              <Card.Img src={serviceImages()} />
-            </Col>
-            <Col xs="4" md="6" className="offset-1 mt-3">
-              <Card.Text>
-                <h5>
-                  <b>{categoryGroup}</b>
-                </h5>
-                <p>
-                  Grupo compartido de: <b>{nameUser}</b>
-                </p>
-                <p>
-                  <b>{isGroupComplete() ? "Grupo completo" : usersInGroupCounter()}</b>
-                </p>
-              </Card.Text>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs="3" md="4" className="offset-1 mb-2">
-              <Card.Text>
-                <a>En grupo:</a>
-                <h3>{priceGroup}€</h3>
-              </Card.Text>
-            </Col>
-            <Col xs="4" md="6" className="text-center mt-2">
-              <Button type="text" onClick={onNavigateGroupDetail}>
-                Ver grupo
-              </Button>
-            </Col>
-          </Row>
+        <Card className="shadow p-4 flex-row">
+          <Col xs="2" md="4" lg="4" className="d-flex flex-column">
+            <Card.Img src={serviceImages()} />
+            <Card.Text className="mt-3">
+              <a>En grupo:</a>
+              <h3>{priceGroup}€</h3>
+            </Card.Text>
+          </Col>
+          <Col xs="8" md="8" lg="8" className=" ps-5 d-flex flex-column">
+            <Card.Text className="p-0 m-0">
+              <h5>
+                <b>{categoryGroup}</b>
+              </h5>
+              <p>
+                Grupo compartido de: <b>{nameUser}</b>
+              </p>
+              <p>
+                <b>
+                  {isGroupComplete() ? "Grupo completo" : usersInGroupCounter()}
+                </b>
+              </p>
+            </Card.Text>
+            <Button type="text" onClick={onNavigateGroupDetail}>
+              Ver grupo
+            </Button>
+          </Col>
         </Card>
       </Container>
     </>

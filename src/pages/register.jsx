@@ -57,7 +57,7 @@ export function Register() {
     <>
       <NavbarComponent
         linkText={"/login"}
-        text={"¿Tienes ya una cuenta?: Inicia sesión"}
+        text={"¿Tienes ya una cuenta? Inicia sesión"}
       />
       <Container>
         <Row className="text-center mt-4 mb-4">
