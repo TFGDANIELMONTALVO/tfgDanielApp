@@ -42,7 +42,7 @@ export function CreateGroup() {
       } catch (error) {
         console.log(error);
         setIsGroupCreatedError(true);
-        toast.error("Ha habido un problema", {
+        toast.error("Introduce los datos nuevamente", {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,

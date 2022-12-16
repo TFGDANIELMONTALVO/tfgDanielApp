@@ -110,7 +110,6 @@ export function Wallet() {
                         <p>
                           {format(new Date(payment.createdAt), "dd-MM-yyyy")}
                         </p>
-                        <hr className="hr" />
                       </Card.Text>
                     </Card.Body>
                   </Card>

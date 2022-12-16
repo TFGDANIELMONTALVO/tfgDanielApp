@@ -29,7 +29,7 @@ export function Login() {
         navigate("/dashboard");
       } catch (error) {
         setIsUserLoginError(true);
-        toast.error("Ha habido un problema", {
+        toast.error("Credenciales incorrectas", {
           position: "top-center",
           autoClose: 3000,
           hideProgressBar: false,

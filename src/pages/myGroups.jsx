@@ -87,7 +87,7 @@ export function MyGroups() {
       </Row>
 
       <Row className="p-2">
-        {user && user.suscribedGroups && (_.isEmpty(user.ownerGroups) ? <Alert variant="secondary">Aquí aparecerán los grupos a los que te hayas unido</Alert> : null)}
+        {user && user.suscribedGroups && (_.isEmpty(user.suscribedGroups) ? <Alert variant="secondary">Aquí aparecerán los grupos a los que te hayas unido</Alert> : null)}
         {user && user.suscribedGroups ? (
           user.suscribedGroups.map((group, index) => (
             <Col

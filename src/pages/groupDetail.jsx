@@ -1,21 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {
-  Alert,
   Button,
   Card,
   Col,
   Container,
-  Image,
   Row,
   Spinner,
 } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { NavbarComponent } from "../components/navbar.component";
-import { exitGroup, groupDetailRoute, joinGroup } from "../services/axios";
+import { exitGroup, groupDetailRoute } from "../services/axios";
 import { AdminGroupPanelControl } from "../components/adminGroupPanelControl.component";
 import { format } from "date-fns";
-import netflix from "../images/Logo-Netflix.png";
-import netflixContent from "../images/neflix-content.jpg";
 import { ModalWindow } from "../components/modal.window.component";
 
 export function GroupDetail() {
@@ -45,7 +41,6 @@ export function GroupDetail() {
   }, [group]);
 
   const usersInGroup = useCallback(() => {
-    //return group.users.length + " / " + group.numOfUsers + " usuarios en este grupo"
     return (
       group.numOfUsers -
       group.users.length +

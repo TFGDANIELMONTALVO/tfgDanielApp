@@ -3,6 +3,7 @@ import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { deleteGroupRoute, groupDetailRoute, updateGroupRoute } from "../services/axios";
 import { ModalWindow } from "./modal.window.component";
+import _ from "lodash"
 
 export function AdminGroupPanelControl() {
   const [show, setShow] = useState(false);
@@ -29,7 +30,7 @@ export function AdminGroupPanelControl() {
     } catch (error) {
         console.log(error);    
     }
-  }, [])
+  }, [updatedGroup])
 
   const onClickDeleteGroupAdmin = useCallback(async () => {
     try {
@@ -66,9 +67,9 @@ export function AdminGroupPanelControl() {
             </Row>
             <Row className="mt-2">
               <Col>
-              <Button variant="secondary" type="text" onClick={onSubmitGroupUpdate}>
+              {_.isEmpty(updatedGroup) ? <Button variant="secondary" disabled>Editar credenciales</Button> : <Button variant="secondary" type="text" onClick={onSubmitGroupUpdate}>
                 Editar credenciales
-              </Button>
+              </Button>}
               </Col>
             </Row>
           </Form>

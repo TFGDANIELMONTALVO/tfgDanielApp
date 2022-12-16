@@ -9,6 +9,7 @@ import {
 } from "../services/axios";
 import { ToastContainer, toast } from "react-toastify";
 import { ModalWindow } from "../components/modal.window.component";
+import _ from "lodash"
 
 export function Settings() {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ export function Settings() {
   const [isUserSuccessfullyUpdated, setIsUserSuccessfullyUpdated] =
     useState(false);
   const [isUserUpdatedError, setIsUserUpdatedError] = useState(false);
+  const [isUserDeleteError, setIsUserDeleteError] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -75,7 +77,18 @@ export function Settings() {
       localStorage.removeItem("user");
       navigate("/");
     } catch (error) {
-      console.log(error);
+      setIsUserDeleteError(true);
+        toast.error("Borra tus grupos creados", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        console.log(error);
     }
   });
 
@@ -196,13 +209,13 @@ export function Settings() {
               </Card.Text>
               <Row>
                 <Col className="d-flex justify-content-center">
-                  <Button
+                  {_.isEmpty(userUpdated) ? <Button variant="secondary" disabled>Actualizar</Button> : <Button
                     variant="secondary"
                     type="text"
                     onClick={onSubmitUserUpdate}
                   >
                     Actualizar
-                  </Button>
+                  </Button>}
                 </Col>
               </Row>
             </Form>
@@ -216,6 +229,7 @@ export function Settings() {
           </Col>
         </Row>
         {isUserUpdatedError && <ToastContainer />}
+        {isUserDeleteError && <ToastContainer />}
         {isUserSuccessfullyUpdated && <ToastContainer />}
       </Container>
       <ModalWindow
@@ -223,7 +237,8 @@ export function Settings() {
         handleClose={handleClose}
         modalTitle={"Borrar cuenta"}
         modalText={
-          "¿Estas seguro de querer borrar tu cuenta? Esta acción no se puede deshacer"
+          "Para borrar tu cuenta primero borra tus grupos creados. ¿Estas seguro de querer borrar tu cuenta? Esta acción no se puede desacer"
+          
         }
         modalConfirmation={"Borrar cuenta"}
         onClickModalWindow={onClickDeleteUser}
